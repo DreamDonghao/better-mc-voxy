@@ -10,12 +10,6 @@ public class BytecodePatch extends ClassVisitor {
     }
     
     @Override
-    public void visit(int version, int access, String name, String signature, 
-                      String superName, String[] interfaces) {
-        super.visit(version, access, name, signature, superName, interfaces);
-    }
-    
-    @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor,
                                       String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
@@ -39,13 +33,11 @@ public class BytecodePatch extends ClassVisitor {
                 @Override
                 public void visitCode() {
                     super.visitCode();
-                    // if (isReloading) return;
                     super.visitFieldInsn(Opcodes.GETSTATIC, CLASS_NAME, "isReloading", "Z");
                     Label skip = new Label();
                     super.visitJumpInsn(Opcodes.IFEQ, skip);
                     super.visitInsn(Opcodes.RETURN);
                     super.visitLabel(skip);
-                    // isReloading = true;
                     super.visitInsn(Opcodes.ICONST_1);
                     super.visitFieldInsn(Opcodes.PUTSTATIC, CLASS_NAME, "isReloading", "Z");
                 }
@@ -57,11 +49,6 @@ public class BytecodePatch extends ClassVisitor {
                         super.visitFieldInsn(Opcodes.PUTSTATIC, CLASS_NAME, "isReloading", "Z");
                     }
                     super.visitInsn(opcode);
-                }
-                
-                @Override
-                public void visitMaxs(int maxStack, int maxLocals) {
-                    super.visitMaxs(maxStack + 2, maxLocals);
                 }
             };
         }
@@ -79,7 +66,8 @@ public class BytecodePatch extends ClassVisitor {
     
     public static byte[] patch(byte[] original) {
         ClassReader cr = new ClassReader(original);
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        // 使用 COMPUTE_FRAMES 自动计算 StackMapTable
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         BytecodePatch patch = new BytecodePatch(cw);
         cr.accept(patch, 0);
         return cw.toByteArray();
@@ -95,9 +83,7 @@ public class BytecodePatch extends ClassVisitor {
         byte[] patched = patch(original);
         Files.write(Paths.get(args[1]), patched);
         
-        System.out.println("Patched successfully!");
+        System.out.println("Patched successfully with COMPUTE_FRAMES!");
         System.out.println("Added: private static boolean isReloading = false;");
-        System.out.println("Modified: voxypipelinepatch() - skip if already reloading");
-        System.out.println("Modified: reload0() - set/clear isReloading flag");
     }
 }

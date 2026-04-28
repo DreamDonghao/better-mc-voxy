@@ -22,7 +22,8 @@ createRenderer() → voxypipelinepatch() → reload0() → Iris.reload()
 
 ## 文件说明
 
-- `mods/voxy-0.2.13-alpha-patched.jar` - 修复后的模组文件
+- `mods/voxy-0.2.13-alpha-patched.jar` - 修复后的模组文件 (v2, 已修复 StackMapTable)
+- `mods/voxy-0.2.13-alpha-patched-v1-broken.jar` - v1版本（有VerifyError问题）
 - `source/voxy-0.2.13-alpha-original.jar` - 原始模组文件（备份）
 - `patch/BytecodePatch.java` - 字节码修改脚本
 
@@ -34,13 +35,19 @@ createRenderer() → voxypipelinepatch() → reload0() → Iris.reload()
 
 ## 技术细节
 
-使用 JDK 内置 ASM 库修改字节码：
+使用 JDK 内置 ASM 库修改字节码，**必须使用 COMPUTE_FRAMES** 自动计算 StackMapTable：
 
 ```bash
 javac --add-exports java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED BytecodePatch.java
-java --add-exports java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED BytecodePatch \
+java --add-exports java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED -cp . BytecodePatch \
     IrisUtil.class IrisUtil.class
 ```
+
+### 关键修复点
+
+v1版本错误：`java.lang.VerifyError: Expecting a stackmap frame at branch target 7`
+
+解决方案：使用 `ClassWriter.COMPUTE_FRAMES` 而不是 `ClassWriter.COMPUTE_MAXS`
 
 ## 版本信息
 
@@ -51,4 +58,5 @@ java --add-exports java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED Bytecode
 
 ## 修改日期
 
-2026-04-28
+- v1: 2026-04-28 (有StackMapTable错误)
+- v2: 2026-04-28 (修复VerifyError)
