@@ -1,5 +1,7 @@
 # Voxy Iris/Oculus Compatibility Fixes
 
+## 本模组仅在最新版better mc整合包中经过测试
+
 ## 问题描述
 
 Voxy 模组与 Iris/Oculus 光影模组之间存在两个兼容性问题：
@@ -45,7 +47,7 @@ Worker线程: ActiveSectionTracker.acquire() → StampedLock.readLock() (阻塞)
 
 ## 文件说明
 
-- `mods/voxy-0.2.13-alpha-patched-v2.jar` - **推荐版本**（仅修复递归，稳定可用，但是游戏内换光影会卡死）
+- `mods/voxy-0.2.13-alpha-patched-v2.jar` - （仅修复递归，稳定可用，但是游戏内换光影会卡死）
 - `mods/voxy-0.2.13-alpha-patched-v3.jar` - v3版本（发现有卡启动的情况，出现请更换v2）
 - `source/voxy-0.2.13-alpha-original.jar` - 原始模组文件（备份）
 - `patch/CombinedVoxyPatch.java` - 综合字节码修改脚本
