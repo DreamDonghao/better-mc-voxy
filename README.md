@@ -45,8 +45,8 @@ Worker线程: ActiveSectionTracker.acquire() → StampedLock.readLock() (阻塞)
 
 ## 文件说明
 
-- `mods/voxy-0.2.13-alpha-patched-v2.jar` - **推荐版本**（仅修复递归，稳定可用）
-- `mods/voxy-0.2.13-alpha-patched-v3.jar` - v3版本（有问题，不推荐使用）
+- `mods/voxy-0.2.13-alpha-patched-v2.jar` - **推荐版本**（仅修复递归，稳定可用，但是游戏内换光影会卡死）
+- `mods/voxy-0.2.13-alpha-patched-v3.jar` - v3版本（发现有卡启动的情况，出现请更换v2）
 - `source/voxy-0.2.13-alpha-original.jar` - 原始模组文件（备份）
 - `patch/CombinedVoxyPatch.java` - 综合字节码修改脚本
 - `patch/BytecodePatch.java` - 仅修复递归的脚本（v2，推荐）
