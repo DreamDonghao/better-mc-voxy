@@ -1,0 +1,15 @@
+# 编译文件
+*.class
+
+# 临时文件
+*.tmp
+*.bak
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
