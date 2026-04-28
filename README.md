@@ -49,14 +49,14 @@ Worker线程: ActiveSectionTracker.acquire() → StampedLock.readLock() (阻塞)
 - `mods/voxy-0.2.13-alpha-patched-v3.jar` - v3版本（发现有卡启动的情况，出现请更换v2）
 - `source/voxy-0.2.13-alpha-original.jar` - 原始模组文件（备份）
 - `patch/CombinedVoxyPatch.java` - 综合字节码修改脚本
-- `patch/BytecodePatch.java` - 仅修复递归的脚本（v2，推荐）
+- `patch/BytecodePatch.java` - 仅修复递归的脚本（v2）
 - `patch/ActiveSectionTrackerPatch.java` - 仅修复死锁的脚本（有问题）
 
 ## 使用方法
 
-**推荐使用 v2 版本：**
+**推荐使用 v3 版本：**
 
-1. 将 `mods/voxy-0.2.13-alpha-patched-v2.jar` 复制到 Minecraft 模组目录
+1. 将 `mods/voxy-0.2.13-alpha-patched-v3.jar` 复制到 Minecraft 模组目录
 2. 删除或备份原版 Voxy 模组
 3. 重新启动游戏
 
